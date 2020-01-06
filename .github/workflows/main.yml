@@ -36,4 +36,4 @@ jobs:
         # set account
         qshell account ${{ secrets.ACCESS_KEY }} ${{ secrets.SECRET_KEY }} cdswyda
         # do upload
-        qshell qupload2 --src-dir=dist --bucket=cdswyda-blog --overwrite=true --success-list=success.txt --failure-list=failure.txt --thread-count=10 --overwrite=true
+        qshell qupload2 --src-dir=dist --bucket=cdswyda-blog --overwrite=true --success-list=success.txt --failure-list=failure.txt --thread-count=100 --overwrite=true
