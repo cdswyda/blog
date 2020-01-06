@@ -1,0 +1,23 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "my blog on github",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "mkdir dist && echo hello > dist/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdswyda/blog.git"
+  },
+  "keywords": [
+    "blog"
+  ],
+  "author": "cdswyda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cdswyda/blog/issues"
+  },
+  "homepage": "https://github.com/cdswyda/blog#readme"
+}
