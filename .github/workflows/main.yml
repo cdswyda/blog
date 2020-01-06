@@ -1,0 +1,39 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
+
+    - name: Install Dependencies and Build
+      run: |
+        npm install
+        npm run build
+
+    - name: Setup qiniu qshell environment
+      uses: foxundermoon/setup-qshell@v1.0
+      with:
+        # version to use.  Examples: 2.4.0
+        # qshell-version: # optional, default is 2.4.0
+        qshell-version: '2.4.1'
+
+    - name: upload to qiniu oss
+      # env:
+      #  AccessKey: ${{ secrets.ACCESS_KEY }}
+      #  SecretKey: ${{ secrets.SECRET_KEY }}
+      #  Name: cdswyda
+      run: |
+        # set account
+        qshell account -w ${{ secrets.ACCESS_KEY }} ${{ secrets.SECRET_KEY }} $Name
+        # do upload
+        qshell qupload2 --src-dir=dist --bucket=cdswyda-blog --overwrite=true --success-list=success.txt --failure-list=failure.txt
