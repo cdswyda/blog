@@ -21,6 +21,7 @@ jobs:
       run: |
         npm install
         npm run build
+
     - name: Upload Artifacts # The project is then uploaded as an artifact named 'site'.
        uses: actions/upload-artifact@v1
        with:
@@ -38,11 +39,12 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: site
-    - name: Deploy
-      uses: JamesIves/github-pages-deploy-action@releases/v3
-      with:
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BRANCH: gh-pages # The branch the action should deploy to.
-        FOLDER: site # The folder the action should deploy.
-        CLEAN: true
-        CLEAN_EXCLUDE: '["CNAME"]'
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: site # The folder the action should deploy.
+          CLEAN: true
+          CLEAN_EXCLUDE: '["CNAME"]'
