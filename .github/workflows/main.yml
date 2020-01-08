@@ -51,6 +51,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: deploy to pages
-      use: maxheld83/ghpages
+      uses: maxheld83/ghpages
       env: 
         BUILD_DIR: dist
