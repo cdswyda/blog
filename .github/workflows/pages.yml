@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v1
 
     - name: Setup Node
       uses: actions/setup-node@v1
@@ -21,32 +21,40 @@ jobs:
       run: |
         npm install
         npm run build
-
-    # The project is then uploaded as an artifact named 'site'.
-    - name: Upload Artifacts 
-      uses: actions/upload-artifact@v1
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
-        name: site
-        path: dist
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: gh-pages # The branch the action should deploy to.
+        FOLDER: dist # The folder the action should deploy.
+        CLEAN: true
+        CLEAN_EXCLUDE: '["CNAME"]'
 
-  deploy:
-    needs: [build] 
-    # The second job must depend on the first one to complete before running, and uses ubuntu-latest instead of windows.
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+  #   # The project is then uploaded as an artifact named 'site'.
+  #   - name: Upload Artifacts 
+  #     uses: actions/upload-artifact@v1
+  #     with:
+  #       name: site
+  #       path: dist
+
+  # deploy:
+  #   needs: [build] 
+  #   # The second job must depend on the first one to complete before running, and uses ubuntu-latest instead of windows.
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v1
  
-      - name: Download Artifacts # The built project is downloaded into the 'site' folder.
-        uses: actions/download-artifact@v1
-        with:
-          name: site
+  #     - name: Download Artifacts # The built project is downloaded into the 'site' folder.
+  #       uses: actions/download-artifact@v1
+  #       with:
+  #         name: site
 
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@releases/v3
-        with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: site # The folder the action should deploy.
-          CLEAN: true
-          CLEAN_EXCLUDE: '["CNAME"]'
+  #     - name: Deploy
+  #       uses: JamesIves/github-pages-deploy-action@releases/v3
+  #       with:
+  #         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+  #         BRANCH: gh-pages # The branch the action should deploy to.
+  #         FOLDER: site # The folder the action should deploy.
+  #         CLEAN: true
+  #         CLEAN_EXCLUDE: '["CNAME"]'
